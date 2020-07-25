@@ -2,5 +2,5 @@ language: node_js
 install:
     - npm install -g codecov
 script:
-    - test
+    - npm test
     - codecov
