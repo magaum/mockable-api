@@ -36,6 +36,10 @@
         "jest": "^26.1.0",
         "nodemon": "^2.0.4"
     },
+    "jest": {
+        "coverageDirectory": "./coverage/",
+        "collectCoverage": true
+    },
     "repository": {
         "url": "git+ssh://git@github.com/magaum/mockable-api.git"
     },

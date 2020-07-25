@@ -1,5 +1,7 @@
 # Mockable API
 
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/9cd72c32c3c04401b34b4ea7e811044c)](https://www.codacy.com/manual/magaum/mockable-api?utm_source=github.com&utm_medium=referral&utm_content=magaum/mockable-api&utm_campaign=Badge_Grade)
+
 API for mock http responses
 
 ## Get starting
