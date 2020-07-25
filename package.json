@@ -6,7 +6,7 @@
     "scripts": {
         "lint": "eslint --fix",
         "start": "node",
-        "test": "npx jest",
+        "test": "jest",
         "debug": "npx nodemon --inspect=0.0.0.0:9200",
         "pretest": "docker rm -f mockable-api-tests || docker build -t mockable-api-tests ./test && docker run --name mockable-api-tests -d mockable-api-tests"
     },
