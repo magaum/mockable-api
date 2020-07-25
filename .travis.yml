@@ -1,9 +1,10 @@
+os: linux
 language: node_js
 cache:
     directories:
         - node_modules
 install:
-    - npm install
+    - npm install --silent
     - npm install -g codecov
 script:
     - npm test
