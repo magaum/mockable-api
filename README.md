@@ -2,6 +2,8 @@
 
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/9cd72c32c3c04401b34b4ea7e811044c)](https://www.codacy.com/manual/magaum/mockable-api?utm_source=github.com&utm_medium=referral&utm_content=magaum/mockable-api&utm_campaign=Badge_Grade)
 
+[![Codecov](https://codecov.io/gh/magaum/mockable-api/branch/master/graph/badge.svg)](https://codecov.io/gh/magaum/mockable-api)
+
 [![Build Status](https://travis-ci.org/magaum/mockable-api.svg?branch=master)](https://travis-ci.org/magaum/mockable-api)
 
 API for mock http responses
