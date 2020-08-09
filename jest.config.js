@@ -32,9 +32,7 @@ module.exports = {
     coverageProvider: "v8",
 
     // A list of reporter names that Jest uses when writing coverage reports
-    coverageReporters: [
-        "lcov",
-    ],
+    coverageReporters: ["lcov"],
 
     // An object that configures minimum threshold enforcement for coverage results
     // coverageThreshold: undefined,
@@ -88,7 +86,7 @@ module.exports = {
     // notifyMode: "failure-change",
 
     // A preset that is used as a base for Jest's configuration
-    // preset: undefined,
+    //preset: "@shelf/jest-mongodb",
 
     // Run tests from one or more projects
     // projects: undefined,
