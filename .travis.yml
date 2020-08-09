@@ -16,6 +16,6 @@ script:
 deploy:
     provider: heroku
     api_key:
-        security: $HEROKU_API_KEY
+        secure: $HEROKU_API_KEY
     app: mockable-api
     on: task/heroku-deploy
