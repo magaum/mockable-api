@@ -13,3 +13,9 @@ install:
 script:
     - npm test
     - codecov --token=$CODECOV_TOKEN
+deploy:
+    provider: heroku
+    api_key:
+        security: $HEROKU_API_KEY
+    app: mockable-api
+    on: task/heroku-deploy
