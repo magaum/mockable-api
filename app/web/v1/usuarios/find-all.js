@@ -2,6 +2,7 @@ const redis = require("../../../lib/redis")();
 const { circuitBreaker } = require("../../../lib/circuit-breaker");
 const { error } = require("../../../lib/logger");
 const { captureEvent } = require("../../../lib/sentry");
+const { rest } = require("lodash");
 
 const circuit = circuitBreaker(async () => {
     const usuariosCache = await redis.get("usuarios");
@@ -38,19 +39,17 @@ const circuit = circuitBreaker(async () => {
  *              "200":
  *                  description: "Lista de usuários"
  */
-module.exports = async ({ res, next }) => {
-    circuit
-        .fallback(async () => {
-            captureEvent({ message: "Usuarios fallback, erro ao listar usuarios" });
-            return JSON.parse(await redis.get("usuarios"))
-        })
-        .fire()
-        .then(usuarios => {
-            res.status(200)
-                .json(usuarios)
-        })
-        .catch((err) => {
-            error("Erro no endpoint /usuarios:", err);
-            next(err)
-        });
-};
+module.exports = async (req, res, next) => circuit
+    .fallback(async () => {
+        captureEvent({ message: "Usuarios fallback, erro ao listar usuarios" });
+        return JSON.parse(await redis.get("usuarios"))
+    })
+    .fire()
+    .then(usuarios => {
+        res.status(200)
+            .json(usuarios);
+    })
+    .catch((err) => {
+        error("Erro no endpoint /usuarios:", err);
+        next(err)
+    });
