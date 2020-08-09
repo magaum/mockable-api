@@ -11,5 +11,6 @@ if (process.env.NODE_ENV === environments.PRODUCTION && isUndefined(sentryDsn)) 
 
 Sentry.init({ dsn: sentryDsn });
 
+exports.captureEvent = Sentry.captureEvent;
 exports.errorHandler = require("./error-handler");
 exports.requestHandler = require("./request-handler");

@@ -20,6 +20,7 @@ services:
             - db
         networks:
             - mockable
+            - mockable-cache
     db:
         container_name: mockable-db
         image: mongo
@@ -32,9 +33,18 @@ services:
             - mockable-data:/data
         networks:
             - mockable
+    cache:
+        container_name: mockable-cache
+        image: redis:latest
+        ports:
+            - "6379:6379"
+        networks:
+            - mockable-cache
 
 networks:
     mockable:
+        driver: bridge
+    mockable-cache:
         driver: bridge
 
 volumes:
