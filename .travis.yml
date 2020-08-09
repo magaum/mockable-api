@@ -1,0 +1,15 @@
+os: linux
+language: node_js
+node_js:
+    - 12.18.3
+cache:
+    directories:
+        - node_modules
+before_install:
+    - npm update --silent
+install:
+    - npm install --silent
+    - npm install -g codecov
+script:
+    - npm test
+    - codecov --token=$CODECOV_TOKEN

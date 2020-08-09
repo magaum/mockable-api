@@ -1,0 +1,26 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Docker",
+            "type": "node",
+            "request": "attach",
+            "port": 9200,
+            "cwd": "${workspaceFolder}",
+            "address": "localhost",
+            "localRoot": "${workspaceFolder}",
+            "remoteRoot": "/usr/src/app",
+            "protocol": "inspector"
+        },
+        {
+            "name": "Node",
+            "type": "node",
+            "request": "attach",
+            "cwd": "${workspaceFolder}/src/server.js",
+            "processId": "${command:PickProcess}",
+            "restart": true,
+            "protocol": "inspector",
+            "skipFiles": ["<node_internals>/**"]
+        }
+    ]
+}

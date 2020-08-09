@@ -1,0 +1,55 @@
+{
+    "name": "mockable-api",
+    "version": "1.0.0",
+    "description": "Api for mock http responses",
+    "main": "app/server.js",
+    "scripts": {
+        "lint": "eslint --fix",
+        "start": "node",
+        "test": "npx jest --coverage",
+        "debug": "npx nodemon --inspect=0.0.0.0:9200"
+    },
+    "keywords": [
+        "mock",
+        "api",
+        "nodejs",
+        "docker",
+        "jest",
+        "sentry"
+    ],
+    "author": "Weslei Luiz de Paula Pinto",
+    "license": "GPL-3.0",
+    "dependencies": {
+        "@hapi/joi": "^17.1.1",
+        "@sentry/node": "^5.20.0",
+        "dotenv": "^8.2.0",
+        "express": "^4.17.1",
+        "ioredis": "^4.17.3",
+        "lodash": "^4.17.19",
+        "mongoose": "^5.9.25",
+        "morgan": "^1.10.0",
+        "opossum": "^5.0.0",
+        "swagger-jsdoc": "^4.0.0",
+        "swagger-ui-express": "^4.1.4"
+    },
+    "devDependencies": {
+        "@shelf/jest-mongodb": "^1.2.1",
+        "eslint": "^7.5.0",
+        "jest": "^26.1.0",
+        "nodemon": "^2.0.4"
+    },
+    "jest": {
+        "coverageDirectory": "./coverage/",
+        "collectCoverage": true
+    },
+    "repository": {
+        "url": "git+ssh://git@github.com/magaum/mockable-api.git"
+    },
+    "bugs": {
+        "url": "https://github.com/magaum/mockable-api/issues"
+    },
+    "homepage": "https://github.com/magaum/mockable-api#readme",
+    "directories": {
+        "test": "test"
+    }
+}
