@@ -1,7 +1,7 @@
 const createConnection = require("./create-connection");
 const { logger } = require("../logger");
 
-let client = undefined;
+let client;
 
 function getClient() {
     if (typeof client === "undefined") {
