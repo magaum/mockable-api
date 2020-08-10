@@ -13,3 +13,10 @@ install:
 script:
     - npm test
     - codecov --token=$CODECOV_TOKEN
+# https://docs.travis-ci.com/user/deployment/heroku/
+deploy:
+    provider: heroku
+    api_key:
+        secure: 7zFFH3vAloH1OFmea3W4vpATPwijaZaNa7TGItooKfFz5rciRfcHlWob6MkfZ6PV55qyVNZYwliRWLTqbTpLBiLAumVCCVcK3nv03WGonA203KPq3v74YoLusvULvFc2L0e5NE0+AaKKuwGWFaoUgbMifGhbaCjOXhKZmS4yKOpW3NqAuOqVeWp6WHECzKtYMCEqauA0vZ7ykvVRtGJ2gz4QPF4qsoRYEn2YUwoC+MCaOi3mrp1yWwoQQPpmBN9Fix1A6uQOhA5EzgGw7UtRKTKBlzugzrIcIrhW1zWkvy+PXLr6l7B5tfNNluwO0Sg2PQhYFqAg3xRtGpVLj2oD7n4Uz1ZY93WHg+f4vcb/TJEXWbvDlj+sFtJxjaJxSi25cItmCbzyN3yaQmF3GLufY8uVqEXstC7sBdtkicxrVS6mq6nDg6vVHEe7NNdE//8zBlrB5yexc34mp1ig/frs9nZRgszdVHu5T2LNTXx6h6Lrj4mLMlEcSHJc6eq+e9MnsFgzt6+n3Exce38RtD8Wsko0hX6E0tfkLQ6GpV3QZYk1EiM/fd6+I/hN8+/N+/PHQ9KT68WHv1pxbe8FBO7KViEFLN2Wph0uG/I4UPJ8K4ECi8lS9tRAEKpIwfCmyXxx95wHOnIoxK/OawwjW2oGazLswewVfTCRiOZL9qR8aQ==
+    app: mockable-api
+    on: master
