@@ -1,4 +1,4 @@
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const throwIfEmpty = require("../../domain/helpers/throwIfEmpty");
 
 /**

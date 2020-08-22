@@ -13,7 +13,7 @@ module.exports = {
         },
     },
     servers: [{
-        url: "/api/v1"
+        url: "/api/"
     }],
     components: {
         securitySchemes: {

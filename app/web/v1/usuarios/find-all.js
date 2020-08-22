@@ -26,7 +26,7 @@ const circuit = circuitBreaker(async () => {
 /**
  * @swagger
  *
- *  /usuarios:
+ *  /v1/usuarios:
  *      get:
  *          operationId: Listar todos
  *          tags:

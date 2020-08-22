@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const connectionOptions = require("./connection-options");
 const updateDocumentVersionPlugin = require("./plugins/update-version-plugin");
-const { error } = require("../lib/logger");
+const { logger } = require("../lib/logger");
 module.exports = async () => {
     const mongoUri = process.env.MONGO_URI;
 
@@ -13,9 +13,11 @@ module.exports = async () => {
     mongoose.plugin(updateDocumentVersionPlugin);
 
     return await mongoose.connect(mongoUri, connectionOptions, (err) => {
-        if (err) {
-            error(err);
-            throw err;
+        if (!err) {
+            return;
         }
+
+        logger(err);
+        throw err;
     });
 };

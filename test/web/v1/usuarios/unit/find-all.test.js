@@ -1,5 +1,5 @@
-const findAll = require("../../../../app/web/v1/usuarios/find-all");
-jest.mock("../../../../app/lib/redis", () => {
+const findAll = require("../../../../../app/web/v1/usuarios/find-all");
+jest.mock("../../../../../app/lib/redis", () => {
     return jest.fn().mockImplementation(() => {
         return {
             set: jest.fn(),

@@ -9,7 +9,7 @@ const { errorHandler, requestHandler } = require("../../lib/sentry");
 module.exports = (app) => {
     app.use(router);
     app.use(requestHandler());
-    app.use("/api/v1", apiRoutes);
+    app.use("/api", apiRoutes);
     app.use(swaggerDocs);
     app.use(healthCheck);
     app.use(notFoundHandler);

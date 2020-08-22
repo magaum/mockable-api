@@ -6,7 +6,7 @@ const swaggerUi = require("swagger-ui-express");
 
 const options = {
     swaggerDefinition,
-    apis: ["./app/web/v1/**/*.js"],
+    apis: ["./app/web/**/*.js"],
 };
 const swaggerSpec = swaggerJSDoc(options);
 
