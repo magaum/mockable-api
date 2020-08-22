@@ -6,8 +6,13 @@
     "scripts": {
         "lint": "eslint --fix",
         "start": "node",
-        "test": "npx jest --coverage",
+        "test": "npx jest --runInBand --detectOpenHandles --coverage",
         "debug": "npx nodemon --inspect=0.0.0.0:9200"
+    },
+    "config": {
+        "mongodbMemoryServer": {
+            "version": "latest"
+        }
     },
     "keywords": [
         "mock",
