@@ -10,9 +10,9 @@ exports.connect = async () => {
         useCreateIndex: true,
     };
     const mongoUri = await mongoServer.getUri();
-    await mongoose.connect(mongoUri, connectionOptions);
+    return await mongoose.connect(mongoUri, connectionOptions);
 };
 exports.disconnect = async () => {
     await mongoose.disconnect();
-    await mongoServer.stop();
+    return await mongoServer.stop();
 };

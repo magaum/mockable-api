@@ -8,7 +8,7 @@ cache:
 before_install:
     - npm update --silent
 install:
-    - npm install --silent
+    - npm install
     - npm install -g codecov
 script:
     - npm test

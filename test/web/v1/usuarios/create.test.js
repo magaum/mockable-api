@@ -14,14 +14,16 @@ const res = {
 const next = jest.fn();
 
 describe("create tests", () => {
-    beforeAll(async () => await db.connect());
+    beforeAll(async () => {
+        await db.connect();
+    });
 
-    afterAll(async () => await db.disconnect());
+    afterAll(async () => {
+        await db.disconnect();
+    });
 
     it("should create Usuario and return a new one", async () => {
-        const usuario = await create(req, res, next);
-        expect(usuario).not.toBeUndefined();
-        expect(usuario._id).not.toBeUndefined();
+        await expect(create(req, res, next)).resolves.not.toBeUndefined();
         //TODO: validar usuario cadastrado com get
     });
 });
