@@ -39,9 +39,9 @@
         "swagger-ui-express": "^4.1.4"
     },
     "devDependencies": {
+        "@shelf/jest-mongodb": "^1.2.3",
         "eslint": "^7.5.0",
         "jest": "^26.1.0",
-        "mongodb-memory-server": "^6.6.4",
         "nodemon": "^2.0.4"
     },
     "jest": {

@@ -10,7 +10,6 @@ before_install:
 install:
     - npm install
     - npm install -g codecov
-    - npm install mongodb-memory-server
 script:
     - npm test
     - codecov --token=$CODECOV_TOKEN

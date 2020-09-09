@@ -1,25 +1,20 @@
 const mongoose = require("mongoose");
-const { MongoMemoryServer } = require("mongodb-memory-server");
-let mongoServer;
-const { logger } = require("../../app/lib/logger");
-jasmine.DEFAULT_TIMEOUT_INTERVAL = 600000;
+let mongooseConnection;
 
 exports.connect = async () => {
-    mongoServer = new MongoMemoryServer();
-    const connectionOptions = {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-        useFindAndModify: false,
-        useCreateIndex: true,
-    };
-    const mongoUri = await mongoServer.getUri();
-    return await mongoose.connect(mongoUri, connectionOptions, (err) => {
-        if (err) {
-            logger(err);
+    mongooseConnection = await mongoose.connect(
+        process.env.MONGO_URL,
+        {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+        },
+        (err) => {
+            if (err) {
+                process.exit(1);
+            }
         }
-    });
+    );
 };
 exports.disconnect = async () => {
-    await mongoose.disconnect();
-    return await mongoServer.stop();
+    await mongooseConnection.disconnect();
 };
