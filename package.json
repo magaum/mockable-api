@@ -5,9 +5,9 @@
     "main": "app/server.js",
     "scripts": {
         "lint": "eslint --fix",
-        "start": "node",
+        "start": "node app/server.js",
         "test": "npx jest --runInBand --detectOpenHandles --coverage",
-        "debug": "npx nodemon --inspect=0.0.0.0:9200"
+        "debug": "npx nodemon --inspect=0.0.0.0:9200 app/server.js"
     },
     "config": {
         "mongodbMemoryServer": {
@@ -31,6 +31,7 @@
         "dotenv": "^8.2.0",
         "express": "^4.17.1",
         "ioredis": "^4.17.3",
+        "jsonwebtoken": "^8.5.1",
         "lodash": "^4.17.19",
         "mongoose": "^5.9.25",
         "morgan": "^1.10.0",

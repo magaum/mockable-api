@@ -6,7 +6,7 @@ const circuit = circuitBreaker(async (usuario) => {
     const { username, email, password } = usuario;
 
     const hashedPassword = await Usuario.encryptPassword(password);
-    return new Usuario.schema({
+    return await new Usuario.schema({
         username,
         email,
         password: hashedPassword,
