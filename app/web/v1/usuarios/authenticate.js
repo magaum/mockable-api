@@ -1,28 +1,9 @@
-const Usuario = require("../../../domain/usuario");
+const { isEmpty } = require("lodash");
+const { findByUsername, generateToken, matchPassword } = require("../../../domain/usuario");
 const { circuitBreaker } = require("../../../lib/circuit-breaker");
 const { logger } = require("../../../lib/logger");
 
-const circuit = circuitBreaker(async (body) => {
-    const { username, password } = body;
-    const usuario = await Usuario.schema.findOne({ username: username }).lean();
-
-    const isPasswordValid = await Usuario.matchPassword(
-        password,
-        usuario.password
-    );
-
-    if (!isPasswordValid) {
-        throw new Error("Senha inválida");
-    }
-
-    return (
-        Usuario.generateToken({
-            username: usuario.username,
-            id: usuario.id,
-        }),
-        new Error("Senha inválida")
-    );
-});
+const circuit = circuitBreaker(async ({ username }) => await findByUsername(username))
 
 /**
  * @swagger
@@ -77,15 +58,33 @@ const circuit = circuitBreaker(async (body) => {
 module.exports = async (req, res, next) =>
     await circuit
         .fallback(() => {
-            res.status(500).json({
+            return res.status(500).json({
                 message:
                     "Serviço indisponível no momento, tente novamente mais tarde",
             });
         })
         .fire(req.body)
-        .then((token, err) => {
-            res.status(200).json(token);
-            return token;
+        .then(async (usuario) => {
+            const { password } = req.body;
+
+            if (isEmpty(usuario))
+                return res.status(404).json({ message: "Usuário não encontrado" })
+
+            const isPasswordValid = await matchPassword(
+                password,
+                usuario.password
+            );
+
+            if (!isPasswordValid)
+                return res.status(401).json({ message: "Senha inválida" });
+
+            return res.status(200)
+                .json({
+                    token: generateToken({
+                        username: usuario.username,
+                        id: usuario._id,
+                    })
+                })
         })
         .catch((err) => {
             logger("Erro no endpoint POST /usuarios/authenticate:", err);
