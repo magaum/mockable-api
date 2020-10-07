@@ -1,27 +1,12 @@
+const { isEmpty } = require("lodash");
 const Usuario = require("../../../domain/usuario");
 const { circuitBreaker } = require("../../../lib/circuit-breaker");
 const { logger } = require("../../../lib/logger");
 
 const circuit = circuitBreaker(async (body) => {
-    const { username, password } = body;
+    const { username } = body;
     const usuario = await Usuario.schema.findOne({ username: username }).lean();
-
-    const isPasswordValid = await Usuario.matchPassword(
-        password,
-        usuario.password
-    );
-
-    if (!isPasswordValid) {
-        throw new Error("Senha inválida");
-    }
-
-    return (
-        Usuario.generateToken({
-            username: usuario.username,
-            id: usuario.id,
-        }),
-        new Error("Senha inválida")
-    );
+    return usuario;
 });
 
 /**
@@ -83,9 +68,29 @@ module.exports = async (req, res, next) =>
             });
         })
         .fire(req.body)
-        .then((token, err) => {
-            res.status(200).json(token);
-            return token;
+        .then(async (usuario) => {
+            const { password } = req.body;
+
+            if (isEmpty(usuario)) {
+                throw new Error("Usuário não encontrado");
+            }
+
+            const isPasswordValid = await Usuario.matchPassword(
+                password,
+                usuario.password
+            );
+
+            if (!isPasswordValid) {
+                throw new Error("Senha inválida");
+            }
+
+            return (
+                Usuario.generateToken({
+                    username: usuario.username,
+                    id: usuario.id,
+                }),
+                new Error("Senha inválida")
+            );
         })
         .catch((err) => {
             logger("Erro no endpoint POST /usuarios/authenticate:", err);

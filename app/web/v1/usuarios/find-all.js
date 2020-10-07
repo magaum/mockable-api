@@ -1,14 +1,15 @@
 const redis = require("../../../lib/redis")();
 const { circuitBreaker } = require("../../../lib/circuit-breaker");
-const { error } = require("../../../lib/logger");
+const { logger: logError } = require("../../../lib/logger");
 const { captureEvent } = require("../../../lib/sentry");
+const Usuario = require("../../../domain/usuario");
 
 const circuit = circuitBreaker(async () => {
     const usuariosCache = await redis.get("usuarios");
 
     if (usuariosCache) {
         const usuariosCacheParsed = JSON.parse(usuariosCache);
-        const countUsuarios = 0; //TODO: count nos usuarios cadastrados;
+        const countUsuarios = Usuario.schema.where().count();
 
         if (usuariosCacheParsed.length === countUsuarios) {
             return usuariosCacheParsed;
@@ -17,7 +18,7 @@ const circuit = circuitBreaker(async () => {
         redis.del("usuarios");
     }
 
-    const usuarios = []; //TODO: buscar todos os usuários
+    const usuarios = await Usuario.schema.where('isDeleted').equals(false);
     redis.set("usuarios", JSON.stringify(usuarios));
 
     return usuarios;
@@ -51,6 +52,6 @@ module.exports = async (req, res, next) =>
             res.status(200).json(usuarios);
         })
         .catch((err) => {
-            error("Erro no endpoint /usuarios:", err);
+            logError("Erro no endpoint /usuarios:", err);
             next(err);
         });
