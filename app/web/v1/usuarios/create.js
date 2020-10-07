@@ -1,17 +1,8 @@
-const Usuario = require("../../../domain/usuario");
+const { create } = require("../../../domain/usuario");
 const { circuitBreaker } = require("../../../lib/circuit-breaker");
 const { logger } = require("../../../lib/logger");
 
-const circuit = circuitBreaker(async (usuario) => {
-    const { username, email, password } = usuario;
-
-    const hashedPassword = await Usuario.encryptPassword(password);
-    return await new Usuario.schema({
-        username,
-        email,
-        password: hashedPassword,
-    }).save();
-});
+const circuit = circuitBreaker(async ({ username, email, password }) => await create(password, username, email));
 
 /**
  * @swagger
@@ -54,7 +45,7 @@ const circuit = circuitBreaker(async (usuario) => {
 module.exports = async (req, res, next) =>
     await circuit
         .fallback(() => {
-            res.status(500).json({
+            res.status(503).json({
                 message:
                     "Serviço indisponível no momento, tente novamente mais tarde",
             });

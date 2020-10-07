@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const connectionOptions = require("./connection-options");
 const updateDocumentVersionPlugin = require("./plugins/update-version-plugin");
 const { logger } = require("../lib/logger");
+
 module.exports = async () => {
     const mongoUri = process.env.MONGO_URI;
 
@@ -14,6 +15,7 @@ module.exports = async () => {
 
     return await mongoose.connect(mongoUri, connectionOptions, (err) => {
         if (!err) {
+            logger("Mongo connected!")
             return;
         }
 
