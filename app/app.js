@@ -12,9 +12,9 @@ app.use(bodyParser.urlencoded({ extended: true, }));
 app.use(express.json());
 app.use(logger("dev"));
 app.use((req, res, next) => {
-    middlewareLogger(req.query);
-    middlewareLogger(req.params);
-    middlewareLogger(req.body);
+    middlewareLogger({ query: req.query });
+    middlewareLogger({ params: req.params });
+    middlewareLogger({ body: req.body });
     next();
 });
 router(app);

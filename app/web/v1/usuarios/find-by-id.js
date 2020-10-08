@@ -5,8 +5,9 @@ const { captureEvent } = require("../../../lib/sentry");
 const Usuario = require("../../../domain/usuario");
 
 const circuit = circuitBreaker(async ({ params }) => {
-    const usuario = await Usuario.schema.findOne({ _id: params });
-    redis.set(params, JSON.stringify(usuario));
+    const usuario = await Usuario.schema.findOne({ _id: params.id, isDeleted: false }).lean().exec();
+
+    redis.set(params.id, JSON.stringify(usuario));
     return usuario;
 });
 
@@ -38,7 +39,8 @@ module.exports = async (req, res, next) =>
             captureEvent({
                 message: "Usuarios fallback, erro ao listar usuario por id",
             });
-            return JSON.parse(await redis.get(params));
+
+            return JSON.parse(await redis.get(params.id));
         })
         .fire(req)
         .then((usuarios) => {

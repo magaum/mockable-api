@@ -18,7 +18,7 @@ const circuit = circuitBreaker(async () => {
         redis.del("usuarios");
     }
 
-    const usuarios = await Usuario.schema.where('isDeleted').equals(false);
+    const usuarios = await Usuario.schema.where('isDeleted').equals(false).lean();
     redis.set("usuarios", JSON.stringify(usuarios));
 
     return usuarios;
